@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// Promise.all 接收一个 promise对象的数组作为参数，当这个数组里的所有promise对象全部变为resolve或reject状态的时候，它才会去调用 .then 方法
+
+		function getURL(URL) {
+		    return new Promise(function (resolve, reject) {
+		        var req = new XMLHttpRequest();
+		        req.open('GET', URL, true);
+		        req.onload = function () {
+		            if (req.status === 200) {
+		                resolve(req.responseText);
+		            } else {
+		                reject(new Error(req.statusText));
+		            }
+		        };
+		        req.onerror = function () {
+		            reject(new Error(req.statusText));
+		        };
+		        req.send();
+		    });
+		}
+
+		var request = {
+		        comment: function getComment() {
+		            return getURL('http://azu.github.io/promises-book/json/comment.json').then(JSON.parse);
+		        },
+		        people: function getPeople() {
+		            return getURL('http://azu.github.io/promises-book/json/people.json').then(JSON.parse);
+		        }
+		    };
+
+		function main() {
+		    return Promise.all([request.comment(), request.people()]);
+		}
+		// Promise.all 接收 promise对象组成的数组作为参数
+		// 传递给 Promise.all 的promise并不是一个个的顺序执行的，而是同时开始、并行执行的
+		// 只有在全部的XHR通信完成之后（变为FulFilled或Rejected状态）之后，才会调用 .then 方法
+
+		// 运行示例
+		main().then(function (value) {
+		    console.log(value);
+		}).catch(function(error){
+		    console.log(error);
+		});
+
+
+
+		// 使用promise.then(onFulfilled, onRejected) 的话在 onFulfilled 中发生异常的话，在 onRejected 中是捕获不到这个异常的
+		// 在 promise.then(onFulfilled).catch(onRejected) 的情况下then 中产生的异常能在 .catch 中捕获
+	</script>
+</body>
+</html>
