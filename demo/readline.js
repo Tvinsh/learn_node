@@ -19,6 +19,7 @@ const readline = require('readline');
 const fs = require('fs');
 
 function completer(line) {
+    console.log("请输入：")
     const command = 'npm';
     const subCommands = ['help', 'init', 'install'];
 
