@@ -31,7 +31,7 @@ console.log(obj);
 
 // protocol：协议，需要注意的是包含了:，并且是小写的。
 // slashes：如果:后面跟了两个//，那么为true。
-// auth：认证信息，如果有密码，为usrname:passwd，如果没有，则为usrname。注意，这里区分大小写。
+// auth：认证信息，如果有密码，为 usrname:passwd，如果没有，则为usrname。注意，这里区分大小写。
 // host：主机名。注意包含了端口，比如ke.qq.com:8080，并且是小写的。
 // hostname：主机名，不包含端口，并且是小写的。
 // hash：哈希部分，注意包含了#。
